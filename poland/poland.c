@@ -20,6 +20,7 @@ struct nodes {
     char dat[MAXBUF];
     struct nodes *next, *prev; //pointer for list
     struct nodes *left, *right, *parent; //pointer for tree
+    struct nodes *stack_next, *stack_prev;
 };
 
 struct opp {
@@ -42,9 +43,9 @@ int get_priority(char c);
 int main(int argc, char *argv[])
 {
     char c, buf[BUFSIZE];
-    int i, prevtype, prev_priority, cur_priority;
-    struct nodes head, tail, *new_node, *prev_token, *loop_node, *tree_root, *cur_tree_node;
- 
+    int i, prevtype;
+    struct nodes head, tail, *new_node, *loop_node;
+    struct nodes opp_stack, *cur_sp;
 //    scanf("%s", buf);
     fgets(buf, BUFSIZE, stdin);
 
@@ -52,13 +53,17 @@ int main(int argc, char *argv[])
     head.numCount = 0;
     *head.dat = '(';
     head.next = head.prev = &tail;
-    head.left = head.right = 0;
 
     /*Initialize tail*/
     tail.numCount = 0;
     *tail.dat = ')';
     tail.next = tail.prev = &head;
-    tail.left = tail.right = 0;
+
+    /*Initialize stack*/
+    opp_stack.numCount = 0;
+    *opp_stack.dat = 0;
+    opp_stack.stack_next = opp_stack.stack_prev = &opp_stack;
+    cur_sp = &opp_stack;
 
     prevtype = OPERATION;
     for (i = 0; buf[i] != 0; i++) {
@@ -76,8 +81,6 @@ int main(int argc, char *argv[])
                 new_node->prev = tail.prev;
                 new_node->next = &tail;
                 tail.prev = new_node;
-                new_node->left = new_node->right = 0;
-                new_node->parent = 0;
                 prevtype = NUMBER;
                 break;
             case OPERATION:
@@ -93,8 +96,6 @@ int main(int argc, char *argv[])
                 (tail.prev)->next = new_node;
                 new_node->prev = tail.prev;
                 new_node->next = &tail;
-                new_node->left = new_node->right = 0;
-                new_node->parent = 0;
                 tail.prev = new_node;
                 prevtype = OPERATION;
                 break;
@@ -109,59 +110,29 @@ int main(int argc, char *argv[])
         }
     }
 
-    /* check token and add ( ) nodes*/
-    for(loop_node = head.next, prev_token = &head, prev_priority = PRY_LOW;
-            loop_node != &head; loop_node = loop_node->next){
-        if(loop_node->numCount > 0)
-            continue;
-        if((cur_priority = get_priority(loop_node->dat[0])) > prev_priority){
-            new_node = (struct nodes *)malloc(sizeof(struct nodes));
-            *new_node->dat = '(';
-            new_node->numCount = 0;
-            (prev_token->next)->prev = new_node;
-            new_node->next = prev_token->next;
-            prev_token->next = new_node;
-            new_node->prev = prev_token;
-            new_node->left = new_node->right = 0;
-            new_node->parent = 0;
-        }else if(cur_priority < prev_priority){
-            new_node = (struct nodes *)malloc(sizeof(struct nodes));
-            *new_node->dat = ')';
-            new_node->numCount = 0;
-            (loop_node->prev)->next = new_node;
-            new_node->prev = loop_node->prev;
-            loop_node->prev = new_node;
-            new_node->next = loop_node;
-            new_node->left = new_node->right = 0;
-            new_node->parent = 0;
-        }
-
-        prev_token = loop_node;
-        prev_priority = cur_priority;
-    }
-
     /*debug loop*/
-    for(loop_node = head.next;loop_node != &head; loop_node = loop_node->next){
+    for(loop_node = head.next;loop_node != &tail; loop_node = loop_node->next){
         printf("%s [%s]\n", loop_node->dat, loop_node->numCount > 0 ? "num":"opp");
     }
- 
-    /*TODO: create trees*/
-    for(loop_node = head.next, tree_root = cur_tree_node = &head;
-            loop_node != &head; loop_node = loop_node->next){
-        if(loop_node->numCount == 0){
-            /*for operations*/
-            switch(loop_node->dat[0]){
-                case '(':
-                    break;
-                case ')':
-                    break;
-                default:
-                    break;
-            }
+
+    for(loop_node = head.next;loop_node != &head; loop_node = loop_node->next){
+        if(loop_node->numCount > 0){
+            printf("%s ", loop_node->dat);
         }else{
-            /*this node is a number*/
+            while(get_priority(cur_sp->dat[0]) >= get_priority(loop_node->dat[0])){
+                printf("%c ", cur_sp->dat[0]);
+                (cur_sp->stack_prev)->stack_next = cur_sp->stack_next;
+                (cur_sp->stack_next)->stack_prev = cur_sp->stack_prev;
+                cur_sp = cur_sp->stack_prev;
+            }
+            (cur_sp->stack_next)->stack_prev = loop_node;
+            loop_node->stack_next = cur_sp->stack_next;
+            cur_sp->stack_next = loop_node;
+            loop_node->stack_prev = cur_sp;
+            cur_sp = loop_node;
         }
     }
+    printf("\n");
     return 0;
 }
 
