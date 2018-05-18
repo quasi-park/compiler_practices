@@ -19,7 +19,7 @@ struct nodes {
     short numCount;
     char dat[MAXBUF];
     struct nodes *next, *prev; //pointer for list
-    struct nodes *left, *right; //pointer for tree
+    struct nodes *left, *right, *parent; //pointer for tree
 };
 
 struct opp {
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 {
     char c, buf[BUFSIZE];
     int i, prevtype, prev_priority, cur_priority;
-    struct nodes head, tail, *new_node, *prev_token, *loop_node;
+    struct nodes head, tail, *new_node, *prev_token, *loop_node, *tree_root, *cur_tree_node;
  
 //    scanf("%s", buf);
     fgets(buf, BUFSIZE, stdin);
@@ -77,6 +77,7 @@ int main(int argc, char *argv[])
                 new_node->next = &tail;
                 tail.prev = new_node;
                 new_node->left = new_node->right = 0;
+                new_node->parent = 0;
                 prevtype = NUMBER;
                 break;
             case OPERATION:
@@ -93,6 +94,7 @@ int main(int argc, char *argv[])
                 new_node->prev = tail.prev;
                 new_node->next = &tail;
                 new_node->left = new_node->right = 0;
+                new_node->parent = 0;
                 tail.prev = new_node;
                 prevtype = OPERATION;
                 break;
@@ -120,6 +122,8 @@ int main(int argc, char *argv[])
             new_node->next = prev_token->next;
             prev_token->next = new_node;
             new_node->prev = prev_token;
+            new_node->left = new_node->right = 0;
+            new_node->parent = 0;
         }else if(cur_priority < prev_priority){
             new_node = (struct nodes *)malloc(sizeof(struct nodes));
             *new_node->dat = ')';
@@ -128,6 +132,8 @@ int main(int argc, char *argv[])
             new_node->prev = loop_node->prev;
             loop_node->prev = new_node;
             new_node->next = loop_node;
+            new_node->left = new_node->right = 0;
+            new_node->parent = 0;
         }
 
         prev_token = loop_node;
@@ -140,6 +146,22 @@ int main(int argc, char *argv[])
     }
  
     /*TODO: create trees*/
+    for(loop_node = head.next, tree_root = cur_tree_node = &head;
+            loop_node != &head; loop_node = loop_node->next){
+        if(loop_node->numCount == 0){
+            /*for operations*/
+            switch(loop_node->dat[0]){
+                case '(':
+                    break;
+                case ')':
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            /*this node is a number*/
+        }
+    }
     return 0;
 }
 
