@@ -5,3 +5,6 @@
 
 # Table of content(What Im going to make)
 1. Making a converter of infix notation to polish/reverse-polish notations.
+1. Automaton that accepts variable declaration.
+# References
+TBD
