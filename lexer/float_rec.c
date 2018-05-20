@@ -1,30 +1,18 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<ctype.h>
-
-#define STAT_ENTRY 1
-#define STAT_DOT 2
-#define STAT_NUM 3
-#define STAT_OTHER 4
-
-#define BUFLEN 256
-
-#define TRUE 1
-#define FALSE 0
+#include "automaton_head.h"
 
 int isFloat(char * buf);
 
-int main(int argc, char *argv[])
-{
-    char buf[BUFLEN];
-    int ret;
+// int main(int argc, char *argv[])
+// {
+//     char buf[BUFLEN];
+//     int ret;
 
-    // fgets(buf, BUFLEN, stdin);
-    scanf("%s", buf);
-    ret = isFloat(buf);
-    printf("%s is %s\n", buf, ret ? "Float":"Not Float");
-    return 0;
-}
+//     // fgets(buf, BUFLEN, stdin);
+//     scanf("%s", buf);
+//     ret = isFloat(buf);
+//     printf("%s is %s\n", buf, ret ? "Float":"Not Float");
+//     return 0;
+// }
 
 int isFloat(char * buf){
     int stat;

@@ -1,30 +1,19 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<ctype.h>
-
-#define STAT_FLETTER 1
-#define STAT_OLETTER 2
-#define STAT_NOTLETTER 3
-
-#define BUFLEN 256
-
-#define TRUE 1
-#define FALSE 0
+#include "automaton_head.h"
 
 int isChar(char * buf, int numAllow);
 int isName(char * buf);
 
-int main(int argc, char *argv[])
-{
-    char buf[BUFLEN];
-    int ret;
+// int main(int argc, char *argv[])
+// {
+//     char buf[BUFLEN];
+//     int ret;
 
-    // fgets(buf, BUFLEN, stdin);
-    scanf("%s", buf);
-    ret = isName(buf);
-    printf("%s is %s\n", buf, ret ? "Name":"Not Name");
-    return 0;
-}
+//     // fgets(buf, BUFLEN, stdin);
+//     scanf("%s", buf);
+//     ret = isName(buf);
+//     printf("%s is %s\n", buf, ret ? "Name":"Not Name");
+//     return 0;
+// }
 
 int isName(char * buf){
     int stat, ret;
