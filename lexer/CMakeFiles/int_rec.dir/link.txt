@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/cc  -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/int_rec.dir/int_rec.c.o CMakeFiles/int_rec.dir/machine_lib.c.o  -o int_rec 

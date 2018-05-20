@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/keita_suzuki/Library/Mobile Documents/com~apple~CloudDocs/Desktop/programs/C/compiler/lexer/automaton_head.h
+stdio.h
+-
+stdlib.h
+-
+ctype.h
+-
+
+/Users/keita_suzuki/Library/Mobile Documents/com~apple~CloudDocs/Desktop/programs/C/compiler/lexer/char_rec.c
+automaton_head.h
+/Users/keita_suzuki/Library/Mobile Documents/com~apple~CloudDocs/Desktop/programs/C/compiler/lexer/automaton_head.h
+
+/Users/keita_suzuki/Library/Mobile Documents/com~apple~CloudDocs/Desktop/programs/C/compiler/lexer/machine_lib.c
+automaton_head.h
+/Users/keita_suzuki/Library/Mobile Documents/com~apple~CloudDocs/Desktop/programs/C/compiler/lexer/automaton_head.h
+

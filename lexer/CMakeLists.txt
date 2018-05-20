@@ -1,0 +1,6 @@
+cmake_minimum_required (VERSION 2.6)
+project (Lexer)
+add_executable(main main.c machine_lib.c)
+add_executable(int_rec int_rec.c machine_lib.c)
+add_executable(float_rec float_rec.c machine_lib.c)
+add_executable(char_rec char_rec.c machine_lib.c)

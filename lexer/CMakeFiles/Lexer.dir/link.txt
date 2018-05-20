@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/cc  -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/Lexer.dir/main.c.o CMakeFiles/Lexer.dir/int_rec.c.o CMakeFiles/Lexer.dir/float_rec.c.o CMakeFiles/Lexer.dir/char_rec.c.o  -o Lexer 
