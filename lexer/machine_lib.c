@@ -1,10 +1,13 @@
 #include "automaton_head.h"
 
+/*** Prototypes ***/
 int isInt(char *);
 int isFloat(char *);
 int isChar(char *, int);
 int isName(char *);
+int char_check(char *);
 
+/*** Real Funcs ***/
 int isInt(char * buf){
     int stat;
 
@@ -24,7 +27,7 @@ int isInt(char * buf){
 
 int isFloat(char * buf){
     int stat;
- 
+
     stat = STAT_ENTRY;
 
     while(*buf != 0 && *buf != ';'){
@@ -69,10 +72,16 @@ int isName(char * buf){
     return FALSE;
 }
 
+int char_check(char * buf){
+    return isChar(buf, 2);
+}
+
 int isChar(char * buf, int numAllow){
     if((*buf >= 'a' && *buf <= 'z') || (*buf >= 'A' && *buf <= 'Z') || *buf == '_'){
         return TRUE;
-    }else if(numAllow != 0 && *buf <= '9' && *buf >= '0'){
+    }else if(numAllow == 1 && *buf <= '9' && *buf >= '0'){
+        return TRUE;
+    }else if(numAllow == 2){
         return TRUE;
     }
     return FALSE;
