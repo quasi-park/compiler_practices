@@ -1,1 +1,2 @@
 - need to create more automaton
+- output seems awkward
