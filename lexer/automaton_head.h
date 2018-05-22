@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include<ctype.h>
 
 /*** header for char_rec ***/
@@ -26,3 +27,12 @@
 #define TRUE 1
 #define FALSE 0
 
+#define ERR -1
+
+struct variable_list{
+    int var_type;
+    int stops;
+    char var_name[BUFLEN];
+    char var_content[BUFLEN];
+    struct variable_list *next;
+} head;

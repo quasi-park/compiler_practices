@@ -10,10 +10,10 @@ struct mode_selecter {
     int mode_des;
     int (* func_name)(char *);
 } mode_ary[] = {
-    {"integer mode", INT_MODE, isInt},
-    {"name mode", NAME_MODE, isName},
-    {"float mode", FLOAT_MODE, isFloat},
-    {"char mode", CHAR_MODE, char_check},
+    {"int", INT_MODE, isInt},
+    {"name", NAME_MODE, isName},
+    {"float", FLOAT_MODE, isFloat},
+    {"char", CHAR_MODE, char_check},
 //    {"normal mode", NORM_MODE, 0},
     {"fall through", 0, 0}
 };
